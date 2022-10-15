@@ -47,8 +47,8 @@ const registerUser = async (req, res) => {
         // Produce token if there isn't error.
         jwt.sign(payload, process.env.JWT_SECRET, {
             expiresIn: "1d"
-        }, (error,token) => {
-            if(error) throw error;
+        }, (error, token) => {
+            if (error) throw error;
 
             // Return JWT as a response.
             res.json(token);
@@ -65,7 +65,48 @@ const registerUser = async (req, res) => {
 // @access  Pubic
 const loginUser = async (req, res) => {
     try {
-        res.json(req.body);
+        // Take the data from request's body
+        const { email, password } = req.body;
+
+        // The array for holding the error messages
+        let toasts = [];
+
+        // Check values for validate
+        if (!password) toasts.push({ message: "Valid password required", type: "error" });
+        if (password && password.length < 6) toasts.push({ message: "Password must be at least 6 characters", type: "error" });
+        if (!email || !validatedEmail(email)) toasts.push({ message: "Valid e-mail is required", type: "error" });
+
+        // return error array if there is any error occurs
+        if (toasts.length > 0) return res.status(400).json(toasts);
+
+        // Get user from DB
+        let user = await User.findOne({ email });
+
+        // return error if user doesn't exist
+        if (!user) return res.status(400).json([{ message: "User does not exist", type: "error" }]);
+
+        // Compare password in db to password in received
+        const isMatch = await bcrypt.compare(password , user.password);
+
+        // return error if password isn't match
+        if(!isMatch) return res.status(400).json([{message:"Invalid credentials" , type: "error"}]);
+
+        const payload = {
+            user: {
+                id: user._id
+            }
+        }
+
+        // Produce token if there isn't error.
+        jwt.sign(payload, process.env.JWT_SECRET, {
+            expiresIn: "1d"
+        }, (error, token) => {
+            if (error) throw error;
+
+            // Return JWT as a response.
+            res.json(token);
+        });       
+
     } catch (error) {
         console.error(`ERROR : ${error.message}`.red);
         res.status(500).send("Server Error");
