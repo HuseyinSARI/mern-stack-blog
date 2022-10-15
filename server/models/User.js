@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// veri tabanı(mongodb) işlemlerini kolaylaştırmak için mongoose kullandık
 const UserSchema = new mongoose.Schema({
     firstName: {
         type: String,
