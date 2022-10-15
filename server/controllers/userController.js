@@ -13,7 +13,7 @@ const registerUser = async (req, res) => {
 // @route   POST api/users/login
 // @desc    Login a user
 // @access  Pubic
-const loginUser = asycn = (req, res) => {
+const loginUser = async (req, res) => {
     res.send("Login a user");
 }
 
@@ -25,7 +25,7 @@ const getProfile = async (req, res) => {
     res.send("Get user profile");
 }
 
-module.export = {
+module.exports = {
     registerUser,
     loginUser,
     getProfile,
