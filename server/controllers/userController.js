@@ -8,9 +8,10 @@ const colors = require("colors");
 // @access  Pubic
 const registerUser = async (req, res) => {
     try {
-
+        // Take the data from request's body
         const { firstName, lastName, email, password } = req.body;
 
+        // The array for holding the error messages
         let toasts = [];
 
         if (!firstName) toasts.push({ message: "First name is required", type: "error" });
@@ -31,12 +32,28 @@ const registerUser = async (req, res) => {
 
         // Hash password before saving in database
         const salt = await bcrypt.genSalt(10);
-        newUser.password = await bcrypt.hash(password , salt);
+        newUser.password = await bcrypt.hash(password, salt);
 
         // Save user to DB
         await newUser.save();
-        
-        res.json(newUser);
+
+        // payload for making jwt(json web token)
+        const payload = {
+            user: {
+                id: newUser._id
+            }
+        }
+
+        // Produce token if there isn't error.
+        jwt.sign(payload, process.env.JWT_SECRET, {
+            expiresIn: "1d"
+        }, (error,token) => {
+            if(error) throw error;
+
+            // Return JWT as a response.
+            res.json(token);
+        });
+
     } catch (error) {
         console.error(`ERROR : ${error.message}`.red);
         res.status(500).send("Server Error");
