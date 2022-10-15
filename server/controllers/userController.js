@@ -7,22 +7,56 @@ const colors = require("colors");
 // @desc    Register a user
 // @access  Pubic
 const registerUser = async (req, res) => {
-    res.send("Register a user");
+    try {
+        
+        const { firstName, lastName, email, password } = req.body;
+
+        let toasts = [];
+
+        if (!firstName) toasts.push({ message: "First name is required", type: "error" });
+        if (!lastName) toasts.push({ message: "Last name is required", type: "error" });
+        if (!password) toasts.push({ message: "Valid password required", type: "error" });
+        if (password && password.length < 6) toasts.push({ message: "Password must be at least 6 characters", type: "error" });
+        if (!email || !validatedEmail(email)) toasts.push({ message: "Valid e-mail is required", type: "error" });
+
+        if(toasts.length > 0) return res.status(400).json(toasts);
+
+        res.json(req.body);
+
+    } catch (error) {
+        console.error(`ERROR : ${error.message}`.red);
+        res.status(500).send("Server Error");
+    }
 }
 
 // @route   POST api/users/login
 // @desc    Login a user
 // @access  Pubic
 const loginUser = async (req, res) => {
-    res.send("Login a user");
+    try {
+        res.json(req.body);
+    } catch (error) {
+        console.error(`ERROR : ${error.message}`.red);
+        res.status(500).send("Server Error");
+    }
 }
 
 // @route   GET api/users/profile
 // @desc    Get user profile
 // @access  Private
-
 const getProfile = async (req, res) => {
-    res.send("Get user profile");
+    try {
+        res.send("User Profile");
+    } catch (error) {
+        console.error(`ERROR : ${error.message}`.red);
+        res.status(500).send("Server Error");
+    }
+}
+
+const validatedEmail = (email) =>{
+    const regex =/\S+@\S+\.\S+/;
+    // validemail@mail.com returns true
+    return regex.test(email);
 }
 
 module.exports = {

@@ -1,7 +1,5 @@
 const express = require('express');
-// consolu renklendirir
 const colors = require('colors');
-// env dosyasına ulaşmamızı sağlıyor
 const dotenv = require ('dotenv').config();
 const mongoose = require('mongoose');
 
@@ -25,9 +23,6 @@ const connectDB = async () =>{
 }
 
 connectDB();
-
-// oluşturduğumuz rotaları server'ımıza bağlıyoruz.
-// server'a bu uç dan bir istek geldiğinde useRoutes da oluşturduğumuz rotalara gidecek
 
 app.use('/api/users', require('./routes/userRoutes'));
 
