@@ -1,4 +1,8 @@
 {
+  "name": "mern-stack-blog",
+  "version": "1.0.0",
+  "description": "A Simple Blogger site build with MERN Stack",
+  "main": "server.js",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
@@ -8,9 +12,9 @@
     "mongoose": "^6.6.5"
   },
   "scripts": {
-      "start": "node server/server.js",
-      "server": "nodemon server/server.js",
-      "client": "npm start --prefix client",
+      "start": "node server.js",
+      "server": "nodemon server.js",
+      "client": "npm start --prefix ../client",
       "dev": "concurrently \"npm run server \" \"npm run client\""     
   },
   "devDependencies": {
