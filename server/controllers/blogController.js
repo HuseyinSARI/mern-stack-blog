@@ -1,5 +1,4 @@
 const Blog = require("../models/Blog");
-const colors =  require("colors");
 
 // @desc    Get all blogs by user id
 // @route   "/api/blogs"
@@ -17,7 +16,7 @@ const getBlogs = async (req, res) => {
 }
 
 
-// @desc    Create blog with user id
+// @desc    POST blog with user id
 // @route   "/api/blogs"
 // @access  Private
 const createBlog = async (req, res) => {
@@ -28,23 +27,27 @@ const createBlog = async (req, res) => {
             content,
             user: req.user.id    // Its getting from token
         });
-        const blog = await newBlog.save();  
-        res.json(blog);
+
+        await newBlog.save();
+
+        // if (!newBlog) return res.status(400).json([{ message: "Blog not created", type: "error" }]);
+
+        res.json(newBlog);
     } catch (error) {
         console.error(`ERROR: ${error.message}`.bgRed.underline.bold);
         res.status(500).send("Server Error");
     }
 }
 
-// @desc    Create blog with user id
+// @desc    PUT Update blog posts 
 // @route   "/api/blogs"
 // @access  Private
 const updateBlog = async (req, res) => {
     try {
         const { title, content } = req.body;
         const blog = await Blog.findOneAndUpdate({
-            _id: req.params.id,
-            user: req.user.id
+            _id: req.params.id,  // Get it from request params
+            user: req.user.id    // Provided through the token
         }, {
             title,
             content
@@ -61,7 +64,11 @@ const updateBlog = async (req, res) => {
 
 const deleteBlog = async (req, res) => {
     try {
-        res.send("Deleting Blog...")
+        await Blog.findOneAndDelete({
+            _id: req.params.id,
+            user: req.user.id
+        })
+        res.json([{ message: "Blog deleted", type: "success" }]);
     } catch (error) {
         console.error(`ERROR: ${error.message}`.bgRed.underline.bold);
         res.status(500).send("Server Error");
