@@ -86,10 +86,10 @@ const loginUser = async (req, res) => {
         if (!user) return res.status(400).json([{ message: "User does not exist", type: "error" }]);
 
         // Compare password in db to password in received
-        const isMatch = await bcrypt.compare(password , user.password);
+        const isMatch = await bcrypt.compare(password, user.password);
 
         // return error if password isn't match
-        if(!isMatch) return res.status(400).json([{message:"Invalid credentials" , type: "error"}]);
+        if (!isMatch) return res.status(400).json([{ message: "Invalid credentials", type: "error" }]);
 
         const payload = {
             user: {
@@ -105,7 +105,7 @@ const loginUser = async (req, res) => {
 
             // Return JWT as a response.
             res.json(token);
-        });       
+        });
 
     } catch (error) {
         console.error(`ERROR : ${error.message}`.red);
@@ -114,11 +114,19 @@ const loginUser = async (req, res) => {
 }
 
 // @route   GET api/users/profile
-// @desc    Get user profile
-// @access  Private
+//  @desc    Get user profile
+// ! @access  Private
 const getProfile = async (req, res) => {
     try {
-        res.send("User Profile");
+        // Check user is exist in DB
+        const user = await User.findById(req.user.id)
+        .select("-password").select("-__v")
+        .select("-createdAt").select("-updatedAt")
+
+        // return error if not in db
+        if (!user) return res.status(404).json([{ message: "User does not exist", type: "error" }]);
+
+        res.send(user);
     } catch (error) {
         console.error(`ERROR : ${error.message}`.red);
         res.status(500).send("Server Error");
