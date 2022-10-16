@@ -25,6 +25,7 @@ const connectDB = async () =>{
 connectDB();
 
 app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/blogs', require('./routes/blogRoutes'));
 
 app.listen(PORT, ()=> console.info(`Server is running on port ${PORT}`.green));
 
