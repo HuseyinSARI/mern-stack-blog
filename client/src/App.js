@@ -1,6 +1,5 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 //  #region ---------------[ Import Components ]-----------------
 import BlogDetail from "./pages/BlogDetail";
 import BlogList from "./pages/BlogList";
@@ -12,6 +11,20 @@ import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 // import EditBlog from "./pages/EditBlog";
 //  #endregion ---------------------------------------------------
+import { ToastContainer, Zoom, Slide, Bounce, Flip } from "react-toastify";
+
+
+// return random toasts notification animation
+function transitionAnimation(){
+  const list = [Zoom, Slide, Bounce, Flip];
+  return list[Math.floor(Math.random() * list.length)];
+}
+// return random position for toast notification
+function transitionPosition(){
+  const list=["top-right","top-center","top-left"];
+  return list[Math.floor(Math.random() * list.length)];
+}
+
 
 function App() {
   return (<>
@@ -34,6 +47,18 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    <ToastContainer
+      position={transitionPosition()}
+      transition={transitionAnimation()}
+      autoClose={2000}
+      hideProgressBar={false}
+      newestOnTop
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss={false}
+      draggable
+      pauseOnHover
+    />
   </>);
 }
 

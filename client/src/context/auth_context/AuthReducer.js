@@ -12,6 +12,7 @@ export default (state, action) => {
                 toasts: action.payload,
                 currentUser: null,
                 token: null,
+                isAuthenticated: false,
             }
         case ActionTypes.AUTH_ERROR:
             return {
@@ -22,12 +23,18 @@ export default (state, action) => {
             localStorage.removeItem("token");
             return {
                 ...state,
-                token:null,
-                currentUser:null,
+                token: null,
+                currentUser: null,
+                isAuthenticated: false,
             }
         case ActionTypes.REGISTER_SUCCESS:
         case ActionTypes.LOGIN_SUCCESS:
-            localStorage.setItem("token",action.payload);
+            localStorage.setItem("token", action.payload);
+            return {
+                ...state,
+                isAuthenticated: true,
+            }
+        case ActionTypes.SET_CURRENT_USER:
             return {
                 ...state,
                 currentUser: action.payload,
@@ -35,7 +42,7 @@ export default (state, action) => {
         case ActionTypes.CLEAR_ERRORS:
             return {
                 ...state,
-                toasts:null
+                toasts: null
             }
         default:
             return state;

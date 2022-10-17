@@ -1,18 +1,21 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Grid, TextField, Button, Typography,
   Container, CssBaseline, Box, Avatar, InputAdornment, IconButton
 } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
-
-// ------------------ [ Icons ]------------------
+// #region ------------ [ ICONS ] ----------------
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+// #endregion 
+import { useAuth } from "../middleware/contextHooks";
+import { toast } from "react-toastify";
 
-// ----------------------------------------------
 
 function Register() {
+  const { registerUser, cleanErrors, toasts, isAuthenticated } = useAuth();
+
   const navigate = useNavigate();
   const [user, setUser] = useState({
     firstName: "",
@@ -26,22 +29,36 @@ function Register() {
     confirmPassword: false
   });
 
-  const handleRegister= () =>{
-    const { firstName , lastName , email , password , confirmPassword} = user;
+  useEffect(() => {
+    if (isAuthenticated) navigate("/blogs");
 
-    if( !firstName || !lastName || !email || !password || !confirmPassword){
-      alert("Please fill all fields");
+    if (toasts) {
+      toasts.forEach(element => {
+        toast(element.message,{
+          type: element.type
+        })
+      });
+    }
+
+
+  }, [toasts, isAuthenticated, cleanErrors, navigate])
+
+  const handleRegister = () => {
+    const { firstName, lastName, email, password, confirmPassword } = user;
+
+    if (!firstName || !lastName || !email || !password || !confirmPassword) {
+      toast("Please fill all fields",{type:"error"});
       return;
     }
 
-    if( password !== confirmPassword){
-      alert("Passwords doesn't match");
+    if (password !== confirmPassword) {
+      toast("Passwords doesn't match",{type:"error"});
       return;
     }
 
     // ! we don't make email validation - do it yourself later
 
-    alert(JSON.stringify(user,null,4));
+    toast("Registration successful", {type:"success"});
 
   }
 

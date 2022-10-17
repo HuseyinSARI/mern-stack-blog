@@ -11,6 +11,7 @@ export default function AuthState(props) {
         token: localStorage.getItem("token"),
         currentUser: null,
         toasts: null,
+        isAuthenticated:null
     }
 
     const [state, dispatch] = useReducer(authReducer, initialState)
@@ -22,7 +23,7 @@ export default function AuthState(props) {
         }
     }
 
-    // * #region ------------------- [ Actions ] -------------------
+// #region ------------------- [ Actions ] -------------------
     const registerUser = async (userData) => {
         try {
             const res = await axios.post("/api/users/register", userData, config)
@@ -84,13 +85,14 @@ export default function AuthState(props) {
     }
 
 
-// * # end region -----------------------------------------------
+// #endregion -----------------------------------------------
 
     return (
         <AuthContext.Provider value={{
             token: state.token,
             currentUser: state.currentUser,
             toasts: state.toasts,
+            isAuthenticated: state.isAuthenticated,
             registerUser,
             loginUser,
             logoutUser,
