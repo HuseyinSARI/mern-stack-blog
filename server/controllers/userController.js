@@ -24,7 +24,7 @@ const registerUser = async (req, res) => {
 
         // return error if user already exists
         let newUser = await User.findOne({ email });
-        if (newUser) return res.status(400).json({ message: "User already exists", type: "error" });
+        if (newUser) return res.status(400).json([{ message: "User already exists", type: "error" }]);
 
         // The reason we can use it as "req.body". The user is defined in the model file and because of that, it is no way to save any other type of data in the database
         newUser = new User(req.body);
@@ -119,8 +119,8 @@ const getProfile = async (req, res) => {
     try {
         // Check user is exist in DB
         const user = await User.findById(req.user.id)
-        .select("-password").select("-__v")
-        .select("-createdAt").select("-updatedAt")
+            .select("-password").select("-__v")
+            .select("-createdAt").select("-updatedAt")
 
         // return error if not in db
         if (!user) return res.status(404).json([{ message: "User does not exist", type: "error" }]);

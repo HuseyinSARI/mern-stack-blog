@@ -11,7 +11,7 @@ import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined
 // #endregion 
 import { useAuth } from "../middleware/contextHooks";
 import { toast } from "react-toastify";
-
+import Copyright from "../components/Copyright"
 
 function Register() {
   const { registerUser, cleanErrors, toasts, isAuthenticated } = useAuth();
@@ -34,7 +34,7 @@ function Register() {
 
     if (toasts) {
       toasts.forEach(element => {
-        toast(element.message,{
+        toast(element.message, {
           type: element.type
         })
       });
@@ -47,19 +47,19 @@ function Register() {
     const { firstName, lastName, email, password, confirmPassword } = user;
 
     if (!firstName || !lastName || !email || !password || !confirmPassword) {
-      toast("Please fill all fields",{type:"error"});
+      toast("Please fill all fields", { type: "error" });
       return;
     }
 
     if (password !== confirmPassword) {
-      toast("Passwords doesn't match",{type:"error"});
+      toast("Passwords doesn't match", { type: "error" });
       return;
     }
 
     // ! we don't make email validation - do it yourself later
 
-    toast("Registration successful", {type:"success"});
-
+    // toast("Registration successful", {type:"success"});
+    registerUser(user);
   }
 
   return (
@@ -67,7 +67,7 @@ function Register() {
       <CssBaseline />
       <Box
         sx={{
-          marginTop: 8, display: "flex",
+          marginTop: 8, display: "flex", marginBottom: 10,
           flexDirection: "column", alignItems: "center"
         }}
       >
@@ -161,6 +161,7 @@ function Register() {
           </Grid>
         </Grid>
       </Box>
+      <Copyright />
     </Container>
   )
 }
