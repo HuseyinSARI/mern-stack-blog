@@ -27,7 +27,22 @@ function Register() {
   });
 
   const handleRegister= () =>{
-    alert(JSON.stringify(user,null,2))
+    const { firstName , lastName , email , password , confirmPassword} = user;
+
+    if( !firstName || !lastName || !email || !password || !confirmPassword){
+      alert("Please fill all fields");
+      return;
+    }
+
+    if( password !== confirmPassword){
+      alert("Passwords doesn't match");
+      return;
+    }
+
+    // ! we don't make email validation - do it yourself later
+
+    alert(JSON.stringify(user,null,4));
+
   }
 
   return (
