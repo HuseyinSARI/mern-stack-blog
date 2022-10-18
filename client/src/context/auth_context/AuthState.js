@@ -18,8 +18,8 @@ export default function AuthState(props) {
 
     const config = {
         headers: {
-            "Content-Type": "application/json",
-            "x-auth-token": localStorage.getItem("token"),
+            'Content-Type': 'application/json',
+            'x-auth-token': localStorage.getItem('token'),
         }
     }
 

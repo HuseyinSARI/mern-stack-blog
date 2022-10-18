@@ -11,35 +11,40 @@ export default (state, action) => {
                 blogs: [...blogs, action.payload]
             }
         case ActionTypes.GET_BLOG_SUCCESS:
-            return{
+            return {
                 ...state,
                 blogs: action.payload
             }
         case ActionTypes.BLOGS_FAIL:
-            return{
+            return {
                 ...state,
                 toasts: action.payload
             }
         case ActionTypes.UPDATE_BLOG_SUCCESS:
-            return{
+            return {
                 ...state,
                 blogs: state.blogs.map(blog => blog._id === blog.action._id ? action.payload : blog)
             }
         case ActionTypes.BLOG_DELETE:
-            return{
+            return {
                 ...state,
                 blog: state.blogs.filter(blog => blog._id !== action.payload),
                 toasts: action.payload.toasts
             }
         case ActionTypes.GET_BLOG_BY_ID:
-            return{
+            return {
                 ...state,
                 currentBlog: action.payload
             }
         case ActionTypes.CLEAR_ERRORS:
-            return{
+            return {
                 ...state,
-                toasts:null
+                toasts: null
+            }
+        case ActionTypes.CLEAR_BLOGS:
+            return {
+                ...state,
+                blogs: null
             }
 
         default:

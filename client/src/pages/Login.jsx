@@ -17,11 +17,8 @@ function Login() {
   const { loginUser, cleanErrors, toasts, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [user, setUser] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: ""
+    email: "peterpan@mail.com",
+    password: "123456",
   });
   const [showPassword, setShowPassword] = useState(false);
 

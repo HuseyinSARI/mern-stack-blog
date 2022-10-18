@@ -14,14 +14,28 @@ export default function BlogState(props) {
     const [state, dispatch] = useReducer(blogReducer, initialState);
 
     const config = {
-        header: {
+        headers: {
             "Content-Type": "application/json",
-            "x-auth-token": localStorage.getItem("token");
+            "x-auth-token": localStorage.getItem("token")
         }
     }
 
     // #region -------------- [ Actions ] --------------
-    const getBlogs = async () => { }
+    const getBlogs = async () => {
+        try {
+            const res = await axios.get('/api/blogs', config);
+            dispatch({
+                type: ActionTypes.GET_BLOG_SUCCESS,
+                payload: res.data
+            })
+        } catch (err) {
+            console.log(err.response.data);
+            dispatch({
+                type: ActionTypes.BLOGS_FAIL,
+                payload: err.response.data,
+            })
+        }
+    }
 
     const getBlogById = async (blogId) => { }
 
@@ -31,7 +45,17 @@ export default function BlogState(props) {
 
     const deleteBlog = async (blogId) => { }
 
-    const clearErrors = async () => { }
+    const clearErrors = async () => {
+        dispatch({
+            type: ActionTypes.CLEAR_ERRORS,
+        })
+    }
+
+    const clearBlogs = async () =>{
+        dispatch({
+            type: ActionTypes.CLEAR_BLOGS
+        })
+    }
 
     // #endregion
 
@@ -46,6 +70,7 @@ export default function BlogState(props) {
             updateBlog,
             deleteBlog,
             clearErrors,
+            clearBlogs
         }}>
             {props.children}
         </BlogContext.Provider>

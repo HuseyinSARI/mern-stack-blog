@@ -9,6 +9,7 @@ import lightTheme from './themes/lightTheme';
 
 // #region -----------[ States ] ---------
 import AuthState from './context/auth_context/AuthState';
+import BlogState from './context/blog_context/BlogState';
 // #endregion
 
 
@@ -17,7 +18,9 @@ root.render(
   <React.StrictMode>
     <ThemeProvider theme={lightTheme}>
       <AuthState>
-        <App />
+        <BlogState>
+          <App />
+        </BlogState>
       </AuthState>
     </ThemeProvider>
   </React.StrictMode>

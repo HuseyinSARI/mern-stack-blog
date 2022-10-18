@@ -16,11 +16,12 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 // #endregion
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
-import {useAuth} from "../middleware/contextHooks";
+import {useAuth , useBlog} from "../middleware/contextHooks";
 
 const authenticated = ["Blogs", "Profile"];
 
 export default function PrimarySearchAppBar() {
+    const {clearBlogs} =useBlog();
     const {logoutUser}  = useAuth();
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -50,6 +51,7 @@ export default function PrimarySearchAppBar() {
         handleMenuClose();
         logoutUser();
         navigate("/login");
+        clearBlogs();
     }
 
     const menuId = 'primary-search-account-menu';
