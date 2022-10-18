@@ -1,8 +1,11 @@
 import React from 'react'
+import MainContainer from '../components/MainContainer'
 
 function BlogList() {
   return (
-    <div>BlogList</div>
+    <MainContainer>
+      BlogList
+    </MainContainer>
   )
 }
 
