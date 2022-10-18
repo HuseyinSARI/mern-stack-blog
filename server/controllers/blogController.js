@@ -68,7 +68,10 @@ const deleteBlog = async (req, res) => {
             _id: req.params.id,
             user: req.user.id
         })
-        res.json([{ message: "Blog deleted", type: "success" }]);
+        res.json({
+            blogId: req.param.id,
+            toasts: [{ message: "Blog deleted", type: "success" }]
+        });
     } catch (error) {
         console.error(`ERROR: ${error.message}`.bgRed.underline.bold);
         res.status(500).send("Server Error");

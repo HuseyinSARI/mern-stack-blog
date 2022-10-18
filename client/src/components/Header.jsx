@@ -4,13 +4,9 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 
 // #region ----------------[ Icons ] ----------------[
@@ -20,10 +16,12 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 // #endregion
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
+import {useAuth} from "../middleware/contextHooks";
 
 const authenticated = ["Blogs", "Profile"];
 
 export default function PrimarySearchAppBar() {
+    const {logoutUser}  = useAuth();
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -50,6 +48,7 @@ export default function PrimarySearchAppBar() {
 
     const handleLogout = () => {
         handleMenuClose();
+        logoutUser();
         navigate("/login");
     }
 
