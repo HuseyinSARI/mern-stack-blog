@@ -1,35 +1,35 @@
-import {createTheme} from "@mui/material";
+import { createTheme } from "@mui/material";
 
 export default createTheme({
     components: {
-        MuiTextField:{
-            defaultProps:{
+        MuiTextField: {
+            defaultProps: {
                 size: "small",
-                disable:  "true",
+                disable: "true",
                 variant: "outlined",
                 fullWidth: true,
-                InputLabelProps:{
+                InputLabelProps: {
                     shrink: true,
-                    color:"primary"
-                }                
-            }
-        },
-        MuiButton:{
-            defaultProps:{
-                size:"small",
-                color:"primary",
-                variant:"contained"
-            },
-            styleOverrides:{
-                root:{
-                    textTransform:"none"
+                    color: "primary"
                 }
             }
         },
-        MuiCard:{
+        MuiButton: {
+            defaultProps: {
+                size: "small",
+                color: "primary",
+                variant: "contained"
+            },
+            styleOverrides: {
+                root: {
+                    textTransform: "none"
+                }
+            }
+        },
+        MuiCard: {
             variants: [
                 {
-                    props: {variant: "shaded"},
+                    props: { variant: "shaded" },
                     style: {
                         backgroundColor: "#BCCEF8",
                         borderRadius: "10px"
@@ -37,9 +37,16 @@ export default createTheme({
                 }
             ]
         },
-        MuiTypography:{
-            defaultProps:{
+        MuiTypography: {
+            defaultProps: {
                 align: "left"
+            }
+        },
+        MuiPaper: {            
+            styleOverrides:{
+                root:{
+                    padding:8
+                }
             }
         }
     }
