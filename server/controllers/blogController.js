@@ -15,6 +15,19 @@ const getBlogs = async (req, res) => {
     }
 }
 
+const getBlogById = async (req, res) => {
+    try {
+        const blog = await Blog.findOne({ _id: req.params.id, user:req.user.id })
+      
+        if(!blog) return res.status(404).json([{message:"Blog not found" , type:{error}}])
+       
+        res.json(blog)
+    } catch (error) {
+        console.error(`ERROR: ${error.message}`.bgRed.underline.bold);
+        res.status(500).send("Server Error");
+    }
+}
+
 
 // @desc    POST blog with user id
 // @route   "/api/blogs"
@@ -82,5 +95,6 @@ module.exports = {
     getBlogs,
     createBlog,
     updateBlog,
-    deleteBlog
+    deleteBlog,
+    getBlogById
 }

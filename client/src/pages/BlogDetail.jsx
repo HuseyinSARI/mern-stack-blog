@@ -11,9 +11,35 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 // #endregion
 
+import {toast} from "react-toastify"
+import { useBlog } from "../middleware/contextHooks";
+
 function BlogDetail() {
   const { id } = useParams();
+  const { currentBlog, getBlogById, toasts, clearToasts } = useBlog();
+
   const [blog, setBlog] = useState(null);
+  
+  useEffect(() => {
+    // if we have no blog or if our blog isn't the right one
+      if(!currentBlog || currentBlog._id !== id){
+        getBlogById(id);
+      }
+
+      if(currentBlog?._id === id){
+        setBlog(currentBlog);
+      }
+
+      if(toasts){
+        toasts.forEach(element => {
+          toast(element.message, {type: element.type})
+        });
+      }
+
+  
+  }, [currentBlog,id,toasts,clearToasts,getBlogById])
+  
+  
   return (
     <MainContainer>
       <Container maxWidth="md" sx={{ mt: 3, mb: 5 }}>
