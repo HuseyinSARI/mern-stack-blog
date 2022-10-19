@@ -41,8 +41,8 @@ export default function BlogState(props) {
         try {
             const res = await axios.get("/api/blogs/" + blogId, config)
             dispatch({
-                type:ActionTypes.GET_BLOG_BY_ID,
-                payload:res.data
+                type: ActionTypes.GET_BLOG_BY_ID,
+                payload: res.data
             })
         } catch (error) {
             console.log(error.response.data);
@@ -55,9 +55,37 @@ export default function BlogState(props) {
 
     const createBlog = async (blogData) => { }
 
-    const updateBlog = async (blogData) => { }
+    const updateBlog = async (blogData) => {
+        try {
+            const res = await axios.put("/api/blogs/" + blogData._id, blogData, config);
+            dispatch({
+                type: ActionTypes.UPDATE_BLOG_SUCCESS,
+                payload: res.data
+            })
+        } catch (error) {
+            console.log(error.response.data)
+            dispatch({
+                type: ActionTypes.BLOGS_FAIL,
+                payload: error.response.data
+            })
+        }
+    }
 
-    const deleteBlog = async (blogId) => { }
+    const deleteBlog = async (blogId) => {
+        try {
+            const res = await axios.delete("/api/blogs/" + blogId, config);
+            dispatch({
+                type: ActionTypes.BLOG_DELETE,
+                payload: res.data
+            })
+        } catch (error) {
+            console.log(error.response.data)
+            dispatch({
+                type:ActionTypes.BLOGS_FAIL,
+                payload: error.response.data
+            })
+        }
+    }
 
     const clearErrors = async () => {
         dispatch({

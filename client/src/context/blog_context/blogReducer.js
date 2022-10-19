@@ -23,12 +23,12 @@ export default (state, action) => {
         case ActionTypes.UPDATE_BLOG_SUCCESS:
             return {
                 ...state,
-                blogs: state.blogs.map(blog => blog._id === blog.action._id ? action.payload : blog)
-            }
+                currentBlog: action.payload,
+                blogs: state.blogs.map(blog => blog._id === action.payload._id ? action.payload : blog)            }
         case ActionTypes.BLOG_DELETE:
             return {
                 ...state,
-                blog: state.blogs.filter(blog => blog._id !== action.payload),
+                blogs: state.blogs.filter(blog => blog._id !== action.payload.blogId),
                 toasts: action.payload.toasts
             }
         case ActionTypes.GET_BLOG_BY_ID:

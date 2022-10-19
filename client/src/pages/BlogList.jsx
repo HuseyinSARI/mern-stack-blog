@@ -18,9 +18,9 @@ function BlogList() {
 
 
   useEffect(() => {
-    if (!blogs) {
-      getBlogs()
-    }
+
+    getBlogs()
+
 
     if (blogs) {
       setMyBlogs(blogs)
@@ -46,7 +46,7 @@ function BlogList() {
               <Button fullWidth={false} onClick={() => navigate("/newBlog")}> Create Blog </Button>
             </Stack>
             <List sx={{ backgroundColor: "silver", borderRadius: 5, mt: 3 }}>
-              {myBlogs.map(blog => (
+              {myBlogs?.map(blog => (
                 <Link key={blog._id} to={`/blogs/${blog._id}`}>
                   <ListItem>
                     <Tooltip title={blog.title} placement="right">
@@ -59,7 +59,7 @@ function BlogList() {
           </Grid>
           <Grid item xs={12} md={9}>
             <Masonry columns={2}>
-              {myBlogs.map(blog => (
+              {myBlogs?.map(blog => (
                 <BlogCard blog={blog} key={blog._id} />
               ))}
             </Masonry>

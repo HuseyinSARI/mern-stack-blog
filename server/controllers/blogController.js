@@ -15,6 +15,9 @@ const getBlogs = async (req, res) => {
     }
 }
 
+// @desc    GET specific blog by id
+// @route   "/api/blogs/:id"
+// @access  Private
 const getBlogById = async (req, res) => {
     try {
         const blog = await Blog.findOne({ _id: req.params.id, user:req.user.id })
@@ -30,7 +33,7 @@ const getBlogById = async (req, res) => {
 
 
 // @desc    POST blog with user id
-// @route   "/api/blogs"
+// @route   "/api/newblog"
 // @access  Private
 const createBlog = async (req, res) => {
     try {
@@ -75,6 +78,9 @@ const updateBlog = async (req, res) => {
     }
 }
 
+// @desc    DELETE  blog posts 
+// @route   "/api/delete/:id"
+// @access  Private
 const deleteBlog = async (req, res) => {
     try {
         await Blog.findOneAndDelete({
