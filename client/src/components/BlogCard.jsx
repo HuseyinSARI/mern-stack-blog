@@ -17,20 +17,20 @@ const StyledCard = styled(Card)(() => ({
 export default function BlogCard(props) {
     const navigate = useNavigate();
     return (
-        <StyledCard >
+        <Card variant="shaded">
             <CardContent>
-                <Typography variant='h6' align='left'>
+                <Typography variant='h6' >
                     {props.blog.title}
                 </Typography>
-                <Typography color="text.secondary" align='left'>
-                    {truncateString(props.blog.content, 100)}
+                <Typography color="text.secondary" >
+                    {truncateString(props.blog.content,150) }
                 </Typography>
             </CardContent>
-            <CardActions>
-                <Button size="small" onClick={() => navigate("/blogs/" + props.blog._id)}>
+            <CardActions >
+                <Button align="right" size="small" onClick={() => navigate("/blogs/" + props.blog._id)}>
                     Read More
                 </Button>
             </CardActions>
-        </StyledCard>
+        </Card>
     );
 }

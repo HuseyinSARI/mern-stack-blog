@@ -25,6 +25,22 @@ export default createTheme({
                     textTransform:"none"
                 }
             }
+        },
+        MuiCard:{
+            variants: [
+                {
+                    props: {variant: "shaded"},
+                    style: {
+                        backgroundColor: "#BCCEF8",
+                        borderRadius: "10px"
+                    }
+                }
+            ]
+        },
+        MuiTypography:{
+            defaultProps:{
+                align: "left"
+            }
         }
     }
 });
