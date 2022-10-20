@@ -18,6 +18,7 @@ import MainContainer from "../components/MainContainer"
 
 function NewBlog() {
   const navigate = useNavigate();
+  const [onGenerate, setOnGenerate] = useState(false);
   const [newBlog, setNewBlog] = useState({ title: "", content: "" });
   const { toasts, clearErrors, createBlog, blogs, getBlogs } = useBlog();
 
@@ -34,9 +35,8 @@ function NewBlog() {
 
       clearErrors();
     }
-
-
   }, [toasts, clearErrors, blogs, getBlogs])
+
 
   const handleSave = () => {
     if (newBlog.title.length > 0 && newBlog.content.length > 0) {
@@ -46,10 +46,126 @@ function NewBlog() {
     }
   }
 
+  const [loremOptions, setLoremOptions] = useState({
+    minWordPerSentence: 3,
+    maxWordPerSentence: 16,
+    wordPerSentence: 4,
+
+    minSentencePerParagraph: 4,
+    maxSentencePerParagraph: 20,
+    sentencePerParagraph: 5,
+
+    minParaphPerBlog: 2,
+    maxParaphPerBlog: 10,
+    paragraphPerBlog: 3,
+  })
+
+  const handleGenerate = () => {
+    const lorem = new LoremIpsum({
+      sentencesPerParagraph: {
+        max: loremOptions.sentencePerParagraph,
+        min: loremOptions.minSentencePerParagraph,
+      },
+      wordsPerSentence: {
+        max: loremOptions.wordPerSentence,
+        min: loremOptions.minWordPerSentence,
+      }
+    })
+
+    setNewBlog({
+      title: lorem.generateSentences(1),
+      content: lorem.generateParagraphs(loremOptions.paragraphPerBlog)
+    })
+  }
+
   return (
     <MainContainer>
-      <Container maxWidth="md" sx={{ py: 2, my: 1, backgroundColor: "#D8D9CF" }} component={Paper}>
+      <Container maxWidth="md" sx={{ py: 2, my: 1, backgroundColor: "#B8E8FC" }} component={Paper}>
         <Grid container spacing={2}>
+          <Grid item>
+            <FormControlLabel align="left"
+              control={
+                <Checkbox
+                  checked={onGenerate}
+                  onChange={() => setOnGenerate(!onGenerate)}
+                />
+              } label="Auto Generate"
+            />
+          </Grid>
+          <Grid item xs={12} container spacing={4} >
+            <Grid item xs={12} lg={4}>
+              <Typography>Words Per Sentence</Typography>
+              <Slider
+              marks={[
+                {
+                  value: loremOptions.minWordPerSentence,
+                  label: loremOptions.minWordPerSentence,
+                },{
+                  value: loremOptions.maxWordPerSentence,
+                  label: loremOptions.maxWordPerSentence,
+                }
+              ]}
+              valueLabelDisplay="auto"
+              min={loremOptions.minWordPerSentence}
+              max={loremOptions.maxWordPerSentence}
+              value={loremOptions.wordPerSentence}
+              onChange={(e, value) => setLoremOptions({
+                ...loremOptions,
+                wordPerSentence: value
+              })}
+              />
+            </Grid>
+            <Grid item xs={12} lg={4}>
+              <Typography>Sentences Per Paragraph</Typography>
+              <Slider
+              marks={[
+                {
+                  value: loremOptions.minSentencePerParagraph,
+                  label: loremOptions.minSentencePerParagraph,
+                },{
+                  value: loremOptions.maxSentencePerParagraph,
+                  label: loremOptions.maxSentencePerParagraph,
+                }
+              ]}
+              valueLabelDisplay="auto"
+              min={loremOptions.minSentencePerParagraph}
+              max={loremOptions.maxSentencePerParagraph}
+              value={loremOptions.sentencePerParagraph}
+              onChange={(e, value) => setLoremOptions({
+                ...loremOptions,
+                sentencePerParagraph: value
+              })}
+              />
+            </Grid>
+            <Grid item xs={12} lg={4}>
+              <Typography>Paragraph Per Blog</Typography>
+              <Slider
+              marks={[
+                {
+                  value: loremOptions.minParaphPerBlog,
+                  label: loremOptions.minParaphPerBlog,
+                },{
+                  value: loremOptions.maxParaphPerBlog,
+                  label: loremOptions.maxParaphPerBlog,
+                }
+              ]}
+              valueLabelDisplay="auto"
+              min={loremOptions.minParaphPerBlog}
+              max={loremOptions.maxParaphPerBlog}
+              value={loremOptions.paragraphPerBlog}
+              onChange={(e, value) => setLoremOptions({
+                ...loremOptions,
+                paragraphPerBlog: value
+              })}
+              />
+            </Grid>
+            <Grid item>
+              <Button fullWidth={false} onClick={handleGenerate}>Generate Blog</Button>
+            </Grid>
+
+          </Grid>
+
+
           <Grid item xs={12}>
             <TextField
               label='Title' value={newBlog.title}
