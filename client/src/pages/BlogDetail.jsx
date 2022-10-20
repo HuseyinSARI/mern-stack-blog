@@ -90,7 +90,7 @@ function BlogDetail() {
   return (
     <MainContainer>
       <Container maxWidth="md" sx={{ mt: 3, mb: 5 }}>
-        <Paper sx={{ backgroundColor: edit ? "#CDFCF6" : "" }}>
+        <Paper sx={{ backgroundColor: edit ? "secondary.main" : "" }}>
           {!edit
             ? displayDisabled()
             : <Stack spacing={2}>
@@ -106,7 +106,7 @@ function BlogDetail() {
 
               <Stack spacing={2} direction="row">
                 <Button variant='contained' onClick={handleUpdate}>Update</Button>
-                <Button variant='outlined' onClick={handleCancel}>Cancel</Button>
+                <Button variant='outlined' onClick={handleCancel} sx={{color:"primary.main"}}>Cancel</Button>
               </Stack>
             </Stack>
           }

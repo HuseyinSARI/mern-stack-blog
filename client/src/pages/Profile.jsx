@@ -10,7 +10,8 @@ import MainContainer from "../components/MainContainer"
 function Profile() {
   const { currentUser, getProfile, updateUser } = useAuth();
   const [profile, setProfile] = useState({});
-  const [isDisabled, setIsDisabled] = useState(true)
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [temp, setTemp] = useState(null);
 
   useEffect(() => {
     if (!currentUser) {
@@ -26,10 +27,13 @@ function Profile() {
 
   const handleDisabled = () => {
     setIsDisabled(false)
+    setTemp(profile)
   }
 
   const handleCancel = () => {
     setIsDisabled(true)
+    setProfile(temp)
+    setTemp(null)
   }
 
   const handleUpdate = () => {

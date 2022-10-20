@@ -1,6 +1,24 @@
 import { createTheme } from "@mui/material";
 
+// #F8EDE3
+// #DFD3C3
+// #D0B8A8
+// #7D6E83
+// #06283D
+// #251B37
 export default createTheme({
+    palette: {
+        primary: {
+            main: "#7D6E83"
+        },
+        secondary: {
+            main: "#47B5FF"
+        },
+        text: {
+            light: "#7D6E83",
+            primary: "#06283D"
+        }
+    },
     components: {
         MuiTextField: {
             defaultProps: {
@@ -17,12 +35,12 @@ export default createTheme({
         MuiButton: {
             defaultProps: {
                 size: "small",
-                color: "primary",
                 variant: "contained"
             },
             styleOverrides: {
                 root: {
-                    textTransform: "none"
+                    textTransform: "none",
+                    color:"#F8EDE3"
                 }
             }
         },
@@ -42,10 +60,44 @@ export default createTheme({
                 align: "left"
             }
         },
-        MuiPaper: {            
+        MuiPaper: {
+            styleOverrides: {
+                root: {
+                    padding: 8,
+                    backgroundColor: "#BCCEF8"
+                }
+            }
+        },
+        MuiAppBar:{
             styleOverrides:{
                 root:{
-                    padding:8
+                    padding:0
+                }
+            }
+        },
+        MuiListItemText:{
+            styleOverrides:{
+                root:
+                {
+                    color: "#06283D"
+                      // change this after 
+                }
+
+            }
+        },
+        MuiList:{
+            styleOverrides:{
+                root:{
+                    backgroundColor: "#BECEFA"
+                }
+            }
+        },
+        MuiSvgIcon: {
+            styleOverrides: {
+                root: {
+                    color: "#06283D",
+                    backgroundColor: "#D0B8A8",
+                    borderRadius: "50%"
                 }
             }
         }

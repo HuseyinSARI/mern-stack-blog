@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react'
 import {
-  Grid, Typography, Button,
+  Grid, Button,
   Container, Stack, Tooltip,
-  Box, List, ListItemText, Paper, ListItem
+  Box, List, ListItemText, ListItem
 } from "@mui/material"
 import Masonry from '@mui/lab/Masonry';
 import { Link, useNavigate } from 'react-router-dom';
 import MainContainer from '../components/MainContainer'
 import { useBlog } from "../middleware/contextHooks";
-import { toast } from "react-toastify"; import blogReducer from '../context/blog_context/blogReducer';
+import { toast } from "react-toastify";
 import BlogCard from '../components/BlogCard';
 
 function BlogList() {
-  const { getBlogs, toasts, clearErrors, blogs, clearCurrentBlog } = useBlog();
+  const { getBlogs, toasts, clearErrors, blogs } = useBlog();
   const navigate = useNavigate();
   const [myBlogs, setMyBlogs] = useState([]);
 
@@ -45,9 +45,11 @@ function BlogList() {
               <Box sx={{ flexGrow: 1 }} />
               <Button fullWidth={false} onClick={() => navigate("/newBlog")}> Create Blog </Button>
             </Stack>
-            <List sx={{ backgroundColor: "silver", borderRadius: 5, mt: 3 }}>
+            <List sx={{  borderRadius: 5, mt: 3 }}>
               {myBlogs?.map(blog => (
-                <Link key={blog._id} to={`/blogs/${blog._id}`}>
+                <Link
+                  style={{ textDecoration: "none" }}
+                  key={blog._id} to={`/blogs/${blog._id}`}>
                   <ListItem>
                     <Tooltip title={blog.title} placement="right">
                       <ListItemText primary={blog.title} />

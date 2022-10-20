@@ -13,7 +13,7 @@ app.use(express.json({extended : false}));
 const connectDB = async () =>{
     try {
         const conn = await mongoose.connect(
-         `mongodb+srv://${process.env.DATABASE_USERNAME}:${process.env.DATABASE_PASSWORD}@cluster-hs.vrot0gz.mongodb.net/${process.env.DATABASE_NAME}?retryWrites=true&w=majority`,
+         `mongodb+srv://${process.env.DATABASE_USERNAME}:${process.env.DATABASE_PASSWORD}@${process.env.DATABASE_CLUSTER_NAME}.vrot0gz.mongodb.net/${process.env.DATABASE_NAME}?retryWrites=true&w=majority`,
         )
         console.log(`MongoDB Connected: ${conn.connection.host}`.green.bold);
     } catch (error) {

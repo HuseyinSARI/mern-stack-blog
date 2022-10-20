@@ -9,7 +9,7 @@ import { gsap } from "gsap"
 import {
   Grid, Slider, TextField, Container,
   Button, Paper, Stack, Typography,
-  FormControlLabel, Checkbox, nativeSelectClasses
+  FormControlLabel, Checkbox
 } from "@mui/material"
 
 // #region ------------ [ Components ] ------------
@@ -47,7 +47,7 @@ function NewBlog() {
 
   }, [
     toasts, clearErrors, blogs, navigate,
-    getBlogs, blogCreated,  currentBlog])
+    getBlogs, blogCreated, currentBlog, clearCurrentBlog])
 
 
   const handleSave = () => {
