@@ -8,7 +8,7 @@ import MainContainer from "../components/MainContainer"
 // #endregion
 
 function Profile() {
-  const { currentUser, getProfile } = useAuth();
+  const { currentUser, getProfile, updateUser } = useAuth();
   const [profile, setProfile] = useState({});
   const [isDisabled, setIsDisabled] = useState(true)
 
@@ -34,8 +34,8 @@ function Profile() {
 
   const handleUpdate = () => {
     setIsDisabled(true)
+    updateUser(profile)
   }
-
 
   return (
     <MainContainer>
@@ -62,7 +62,7 @@ function Profile() {
           <TextField
             label="Location" name="location"
             value={profile.location} disabled={isDisabled}
-            onChange={(e) => setProfile({ ...profile, lastName: e.target.value })}
+            onChange={(e) => setProfile({ ...profile, location: e.target.value })}
           />
           {
             !isDisabled
