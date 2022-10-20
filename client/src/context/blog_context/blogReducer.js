@@ -6,8 +6,10 @@ export default (state, action) => {
         // Add new blog
         case ActionTypes.NEW_BLOG_SUCCESS:
             let blogs = state.blogs ? state.blogs : [];
+            
             return {
                 ...state,
+                currentBlog: action.payload,
                 blogs: [...blogs, action.payload]
             }
         case ActionTypes.GET_BLOG_SUCCESS:
