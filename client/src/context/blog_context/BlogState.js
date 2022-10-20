@@ -10,6 +10,7 @@ export default function BlogState(props) {
         blogs: null,
         currentBlog: null,
         toasts: null,
+        blogCreated: false
     }
     const [state, dispatch] = useReducer(blogReducer, initialState);
 
@@ -113,6 +114,12 @@ export default function BlogState(props) {
         })
     }
 
+    const clearCurrentBlog = () => {
+        dispatch({
+            type:ActionTypes.CLEAR_CURRENT_BLOG
+        })
+    }
+
     // #endregion
 
     return (
@@ -120,6 +127,8 @@ export default function BlogState(props) {
             blogs: state.blogs,
             currentBlog: state.currentBlog,
             toasts: state.toasts,
+            blogCreated: state.blogCreated,
+            clearCurrentBlog,
             getBlogs,
             getBlogById,
             createBlog,

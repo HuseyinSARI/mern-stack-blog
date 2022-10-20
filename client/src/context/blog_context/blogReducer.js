@@ -6,9 +6,10 @@ export default (state, action) => {
         // Add new blog
         case ActionTypes.NEW_BLOG_SUCCESS:
             let blogs = state.blogs ? state.blogs : [];
-            
+
             return {
                 ...state,
+                blogCreated:true,
                 currentBlog: action.payload,
                 blogs: [...blogs, action.payload]
             }
@@ -26,7 +27,8 @@ export default (state, action) => {
             return {
                 ...state,
                 currentBlog: action.payload,
-                blogs: state.blogs.map(blog => blog._id === action.payload._id ? action.payload : blog)            }
+                blogs: state.blogs.map(blog => blog._id === action.payload._id ? action.payload : blog)
+            }
         case ActionTypes.BLOG_DELETE:
             return {
                 ...state,
@@ -43,10 +45,19 @@ export default (state, action) => {
                 ...state,
                 toasts: null
             }
+        case ActionTypes.CLEAR_CURRENT_BLOG:
+            return {
+                ...state,
+                currentBlog: null,
+                blogCreated: false
+            }
         case ActionTypes.CLEAR_BLOGS:
             return {
                 ...state,
-                blogs: null
+                blogs: null,
+                currentBlog: null,
+                blogCreated:false,
+                toasts:null
             }
 
         default:

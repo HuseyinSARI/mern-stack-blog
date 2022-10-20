@@ -9,7 +9,7 @@ import { gsap } from "gsap"
 import {
   Grid, Slider, TextField, Container,
   Button, Paper, Stack, Typography,
-  FormControlLabel, Checkbox
+  FormControlLabel, Checkbox, nativeSelectClasses
 } from "@mui/material"
 
 // #region ------------ [ Components ] ------------
@@ -20,7 +20,10 @@ function NewBlog() {
   const navigate = useNavigate();
   const [onGenerate, setOnGenerate] = useState(false);
   const [newBlog, setNewBlog] = useState({ title: "", content: "" });
-  const { toasts, clearErrors, createBlog, blogs, getBlogs } = useBlog();
+  const {
+    toasts, clearErrors, createBlog,
+    blogs, getBlogs, clearCurrentBlog,
+    blogCreated, currentBlog } = useBlog();
 
   useEffect(() => {
 
@@ -35,7 +38,16 @@ function NewBlog() {
 
       clearErrors();
     }
-  }, [toasts, clearErrors, blogs, getBlogs])
+
+    if (blogCreated) {
+      const id = currentBlog._id;
+      clearCurrentBlog();
+      navigate("/blogs/" + id);
+    }
+
+  }, [
+    toasts, clearErrors, blogs, navigate,
+    getBlogs, blogCreated,  currentBlog])
 
 
   const handleSave = () => {
