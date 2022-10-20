@@ -210,7 +210,7 @@ function NewBlog() {
           <Grid item>
             <Stack spacing={2} direction="row">
               <Button onClick={handleSave}>Save</Button>
-              <Button variant="outlined" onClick={e => setNewBlog({ title: "", content: "" })}>Clear</Button>
+              <Button variant="outlined" onClick={e => setNewBlog({ title: "", content: "" })} sx={{color:"primary.main"}}>Clear</Button>
               <Button onClick={() => navigate("/blogs")}>Cancel</Button>
             </Stack>
           </Grid>
